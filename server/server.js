@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
@@ -9,6 +9,12 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Загружаем .env файл из корня проекта
+const envPath = path.resolve(__dirname, '../.env');
+dotenv.config({ path: envPath });
+console.log('Loading .env from:', envPath);
+console.log('NODE_ENV:', process.env.NODE_ENV);
 
 const app = express();
 const httpServer = createServer(app);
@@ -137,8 +143,10 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const PORT = process.env.PORT || 5000;
-httpServer.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+const HOST = process.env.HOST || '0.0.0.0';
+httpServer.listen(PORT, HOST, () => {
+  console.log(`Server running on ${HOST}:${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`Client URL: ${process.env.CLIENT_URL || 'not set'}`);
 });
 
