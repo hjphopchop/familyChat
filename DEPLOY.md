@@ -82,7 +82,7 @@ if (process.env.NODE_ENV === 'production') {
 ```javascript
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: process.env.CLIENT_URL || "http://localhost:5000",
     methods: ["GET", "POST"]
   }
 });

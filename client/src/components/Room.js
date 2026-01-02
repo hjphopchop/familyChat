@@ -73,6 +73,21 @@ function Room() {
     updateVideoGridLayout();
   }, [selectedVideoId]);
 
+  // Callback ref для назначения потока сразу при монтировании элемента
+  const setVideoRef = (element) => {
+    localVideoRef.current = element;
+    if (element && localStreamRef.current) {
+      element.srcObject = localStreamRef.current;
+    }
+  };
+
+  // Также назначаем поток, если он появился после монтирования элемента
+  useEffect(() => {
+    if (localVideoRef.current && localStreamRef.current) {
+      localVideoRef.current.srcObject = localStreamRef.current;
+    }
+  }, [loading]);
+
   useEffect(() => {
     const url = `${window.location.origin}/room/${roomId}`;
     setRoomUrl(url);
@@ -104,6 +119,7 @@ function Room() {
       });
       
       localStreamRef.current = stream;
+      // Если элемент уже смонтирован, назначаем поток сразу
       if (localVideoRef.current) {
         localVideoRef.current.srcObject = stream;
       }
@@ -483,7 +499,7 @@ function Room() {
         <div id="remote-videos" className="remote-videos"></div>
         <div className="local-video-wrapper">
           <video
-            ref={localVideoRef}
+            ref={setVideoRef}
             autoPlay
             playsInline
             muted
