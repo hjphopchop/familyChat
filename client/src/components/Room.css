@@ -1,0 +1,749 @@
+.room-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  position: relative;
+}
+
+.room-header {
+  padding: 15px 20px;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.room-url-section {
+  display: flex;
+  gap: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.room-url-input {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.room-url-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.copy-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+}
+
+.copy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+}
+
+.videos-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  padding-bottom: 0;
+  height: calc(100vh - 60px - 100px);
+  max-height: calc(100vh - 60px - 100px);
+  overflow: hidden;
+  position: relative;
+}
+
+.remote-videos {
+  display: grid;
+  gap: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  flex: 1;
+  padding-right: 0;
+  overflow: hidden;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  place-items: center;
+  place-content: center;
+}
+
+
+.remote-videos.grid-1 {
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  padding: 20px;
+  gap: 0;
+}
+
+.remote-videos.grid-2 {
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  padding: 20px;
+  gap: 3px;
+}
+
+.remote-videos.grid-3 {
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  padding: 15px;
+  gap: 3px;
+}
+
+.remote-videos.grid-3 .remote-video:first-child {
+  grid-column: 1 / -1;
+}
+
+.remote-videos.grid-4,
+.remote-videos.grid-5,
+.remote-videos.grid-6 {
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  padding: 15px;
+  gap: 3px;
+}
+
+/* Layout с выбранным видео - выбранное видео занимает больше места */
+.remote-videos.has-selected.grid-1 .remote-video.selected {
+  /* Для 1 участника - уже на весь экран */
+}
+
+.remote-videos.has-selected.grid-2 .remote-video.selected {
+  grid-row: 1 / -1;
+}
+
+.remote-videos.has-selected.grid-3 .remote-video.selected {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.remote-videos.has-selected.grid-4 .remote-video.selected {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.remote-videos.has-selected.grid-5 .remote-video.selected {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.remote-videos.has-selected.grid-6 .remote-video.selected {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.remote-video {
+  width: 500px;
+  height: 375px;
+  max-width: 90vw;
+  max-height: 40vh;
+  aspect-ratio: 4 / 3;
+  border-radius: 20px;
+  background: #1a1a1a;
+  border: 2px solid rgba(102, 126, 234, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(102, 126, 234, 0.1) inset,
+    0 0 20px rgba(102, 126, 234, 0.2);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  object-fit: cover;
+  overflow: hidden;
+  position: relative;
+}
+
+
+/* Для 1-2 участников - немного больше */
+.remote-videos.grid-1 .remote-video,
+.remote-videos.grid-2 .remote-video {
+  width: 600px;
+  height: 450px;
+  max-width: 85vw;
+  max-height: 45vh;
+  border-radius: 24px;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(102, 126, 234, 0.15) inset,
+    0 0 30px rgba(102, 126, 234, 0.3),
+    /* Более сильная белая подсветка для крупных камер */
+    0 0 80px rgba(255, 255, 255, 0.2),
+    inset 0 0 100px rgba(255, 255, 255, 0.15);
+  filter: brightness(1.2) contrast(1.15);
+  -webkit-filter: brightness(1.2) contrast(1.15);
+}
+
+.remote-video:hover {
+  border-color: rgba(102, 126, 234, 0.6);
+  box-shadow: 
+    0 12px 48px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(102, 126, 234, 0.2) inset,
+    0 0 30px rgba(102, 126, 234, 0.4);
+  z-index: 5;
+}
+
+.remote-video.selected {
+  border: 3px solid #667eea;
+  z-index: 10;
+  box-shadow: 
+    0 0 40px rgba(102, 126, 234, 0.8),
+    0 0 0 2px rgba(102, 126, 234, 0.3) inset,
+    0 0 50px rgba(102, 126, 234, 0.5);
+  position: relative;
+}
+
+.remote-video.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(102, 126, 234, 0.9);
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 11;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Grid layout для разного количества участников */
+.remote-videos:has(.remote-video:nth-child(1):last-child) .remote-video {
+  /* 1 участник */
+}
+
+.remote-videos:has(.remote-video:nth-child(2):last-child) {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.remote-videos:has(.remote-video:nth-child(3):last-child) {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.remote-videos:has(.remote-video:nth-child(3):last-child) .remote-video:first-child {
+  grid-column: 1 / -1;
+}
+
+.remote-videos:has(.remote-video:nth-child(4):last-child),
+.remote-videos:has(.remote-video:nth-child(5):last-child),
+.remote-videos:has(.remote-video:nth-child(6):last-child) {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.local-video-wrapper {
+  position: fixed;
+  bottom: 100px;
+  right: 15px;
+  width: 100px;
+  height: 133px;
+  z-index: 50;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  border: 2px solid #667eea;
+  background: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.local-video-wrapper:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+}
+
+.local-video {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  background: #1a1a1a;
+  border: none;
+  transform: scaleX(-1);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(102, 126, 234, 0.2) inset;
+  object-fit: cover;
+}
+
+.video-label {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(102, 126, 234, 0.2);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.control-btn {
+  padding: 14px 24px;
+  background: rgba(42, 42, 42, 0.9);
+  color: white;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 120px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.control-btn:hover:not(.leave-btn):not(:disabled) {
+  background: rgba(58, 58, 58, 0.95);
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.control-btn.disabled {
+  opacity: 0.5;
+  background: rgba(26, 26, 26, 0.9);
+  cursor: not-allowed;
+}
+
+.leave-btn {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  border-color: #dc3545;
+}
+
+.leave-btn:hover {
+  background: linear-gradient(135deg, #c82333 0%, #a01e2a 100%);
+  border-color: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+}
+
+.loading, .error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-size: 1.5rem;
+  gap: 20px;
+}
+
+.error {
+  color: #ff6b6b;
+}
+
+.back-btn {
+  padding: 12px 24px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #5568d3;
+}
+
+@media (max-width: 1024px) {
+  .videos-container {
+    padding: 0;
+    padding-bottom: 100px;
+  }
+
+}
+
+/* Desktop: локальное видео всегда справа снизу */
+@media (min-width: 769px) {
+  .videos-container {
+    flex-direction: column;
+    padding: 0;
+    padding-bottom: 0;
+    height: calc(100vh - 60px - 100px);
+    max-height: calc(100vh - 60px - 100px);
+    overflow: hidden;
+  }
+
+  .remote-videos {
+    flex: 1;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .remote-video {
+    border-radius: 12px;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    height: 100%;
+    max-height: 100%;
+  }
+
+  /* Для всех участников на десктопе - одинаковый размер */
+  .remote-video {
+    width: 500px;
+    height: 375px;
+    max-width: 40vw;
+    max-height: 40vh;
+  }
+
+  .remote-videos.grid-1 .remote-video,
+  .remote-videos.grid-2 .remote-video {
+    width: 600px;
+    height: 450px;
+    max-width: 45vw;
+    max-height: 45vh;
+  }
+
+  .local-video-wrapper {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 140px;
+    height: 187px;
+    z-index: 50;
+  }
+
+  .video-label {
+    bottom: 8px;
+    left: 8px;
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+}
+
+/* Большие экраны - увеличиваем локальное видео */
+@media (min-width: 1200px) {
+  .local-video-wrapper {
+    width: 160px;
+    height: 213px;
+    right: 25px;
+    bottom: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .room-header {
+    padding: 10px 12px;
+  }
+
+  .room-url-section {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .room-url-input {
+    width: 100%;
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+
+  .copy-btn {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .videos-container {
+    padding: 0;
+    padding-bottom: 0;
+    height: calc(100vh - 45px - 120px);
+    max-height: calc(100vh - 45px - 120px);
+    overflow: hidden;
+  }
+
+  .remote-videos {
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
+    overflow: hidden;
+    align-items: center;
+    justify-items: center;
+    padding: 12px;
+    gap: 3px;
+    justify-content: center;
+  }
+
+  /* Для всех участников на планшетах - вертикальный формат */
+  .remote-video {
+    width: calc(50vw - 25px);
+    height: calc((50vw - 25px) * 1.33);
+    max-width: calc(50vw - 25px);
+    max-height: calc((100vh - 165px) / 2);
+    border-radius: 14px;
+    aspect-ratio: 3 / 4;
+  }
+
+  .remote-videos.grid-1 .remote-video {
+    width: calc(100vw - 50px);
+    height: calc((100vw - 50px) * 1.33);
+    max-width: calc(100vw - 50px);
+    max-height: calc(100vh - 165px);
+    aspect-ratio: 3 / 4;
+  }
+
+  .remote-videos.grid-2 .remote-video {
+    width: calc(100vw - 50px);
+    height: calc(((100vh - 165px) / 2) - 3px);
+    max-width: calc(100vw - 50px);
+    max-height: calc((100vh - 165px) / 2);
+    aspect-ratio: 3 / 4;
+  }
+
+  .remote-videos.grid-3 .remote-video:first-child {
+    width: calc(100vw - 50px);
+    height: calc(((100vh - 165px) / 2) - 3px);
+    max-width: calc(100vw - 50px);
+    max-height: calc((100vh - 165px) / 2);
+    aspect-ratio: 3 / 4;
+  }
+
+  .remote-videos.grid-3 .remote-video:not(:first-child) {
+    width: calc(50vw - 25px);
+    height: calc(((100vh - 165px) / 2) - 3px);
+    max-width: calc(50vw - 25px);
+    max-height: calc((100vh - 165px) / 2);
+    aspect-ratio: 3 / 4;
+  }
+
+
+  .local-video-wrapper {
+    bottom: 110px;
+    right: 12px;
+    width: 100px;
+    height: 133px;
+  }
+
+  .controls {
+    flex-wrap: wrap;
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .control-btn {
+    flex: 1;
+    min-width: calc(50% - 4px);
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .leave-btn {
+    min-width: 100%;
+    margin-top: 4px;
+  }
+}
+
+/* iPhone и маленькие экраны */
+@media (max-width: 480px) {
+  .room-header {
+    padding: 8px 10px;
+  }
+
+  .room-url-input {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  .copy-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .videos-container {
+    height: calc(100vh - 40px - 100px);
+    max-height: calc(100vh - 40px - 100px);
+    padding-bottom: 0;
+    overflow: hidden;
+  }
+
+  .remote-videos {
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    align-items: center;
+    justify-items: center;
+    padding: 15px;
+    gap: 3px;
+    justify-content: center;
+  }
+
+  /* Для всех участников на мобильных - вертикальный формат (высота больше ширины) */
+  .remote-video {
+    width: calc(50vw - 20px);
+    height: calc((50vw - 20px) * 1.33);
+    max-width: calc(50vw - 20px);
+    max-height: calc((100vh - 140px) / 2);
+    border-radius: 12px;
+    aspect-ratio: 3 / 4;
+  }
+
+  .remote-videos.grid-1 .remote-video {
+    width: calc(100vw - 40px);
+    height: calc((100vw - 40px) * 1.33);
+    max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 140px);
+    aspect-ratio: 3 / 4;
+  }
+
+  .remote-videos.grid-2 .remote-video {
+    width: calc(100vw - 40px);
+    height: calc(((100vh - 140px) / 2) - 3px);
+    max-width: calc(100vw - 40px);
+    max-height: calc((100vh - 140px) / 2);
+    aspect-ratio: 3 / 4;
+  }
+
+  .remote-videos.grid-3 .remote-video:first-child {
+    width: calc(100vw - 40px);
+    height: calc(((100vh - 140px) / 2) - 3px);
+    max-width: calc(100vw - 40px);
+    max-height: calc((100vh - 140px) / 2);
+    aspect-ratio: 3 / 4;
+  }
+
+  .remote-videos.grid-3 .remote-video:not(:first-child) {
+    width: calc(50vw - 20px);
+    height: calc(((100vh - 140px) / 2) - 3px);
+    max-width: calc(50vw - 20px);
+    max-height: calc((100vh - 140px) / 2);
+    aspect-ratio: 3 / 4;
+  }
+
+
+  .local-video-wrapper {
+    bottom: 100px;
+    right: 10px;
+    width: 90px;
+    height: 120px;
+    border-width: 2px;
+  }
+
+  .video-label {
+    bottom: 6px;
+    left: 6px;
+    padding: 3px 6px;
+    font-size: 9px;
+  }
+
+  .controls {
+    padding: 10px;
+    gap: 6px;
+  }
+
+  .control-btn {
+    min-width: calc(50% - 3px);
+    padding: 10px 10px;
+    font-size: 12px;
+    gap: 4px;
+    min-width: auto;
+  }
+
+  .leave-btn {
+    margin-top: 4px;
+  }
+}
+
+/* iPhone в landscape */
+@media (max-width: 768px) and (orientation: landscape) {
+  .videos-container {
+    height: calc(100vh - 40px - 80px);
+    max-height: calc(100vh - 40px - 80px);
+    padding-bottom: 0;
+    overflow: hidden;
+  }
+
+  .remote-videos {
+    overflow: hidden;
+    max-height: 100%;
+    padding: 12px;
+    gap: 3px;
+    justify-content: center;
+  }
+
+  .remote-video {
+    width: calc(50vw - 25px);
+    height: calc((50vw - 25px) * 1.33);
+    max-width: calc(50vw - 25px);
+    max-height: calc(100vh - 120px);
+    aspect-ratio: 3 / 4;
+  }
+
+  .remote-videos.grid-1,
+  .remote-videos.grid-2 {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .remote-videos.grid-3,
+  .remote-videos.grid-4 {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .local-video-wrapper {
+    bottom: 80px;
+    width: 70px;
+    height: 93px;
+  }
+
+  .controls {
+    padding: 8px;
+  }
+
+  .control-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
